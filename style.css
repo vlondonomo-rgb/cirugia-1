@@ -105,6 +105,8 @@ h2{color:var(--morado);margin-bottom:14px;}
 }
 .paso-btn:hover{background:#efe4f7;border-color:var(--magenta-claro);transform:translateX(3px);}
 .paso-btn.usado{display:none;}
+.paso-btn:disabled{pointer-events:none;opacity:.5;}
+#zona-avance{margin-top:4px;}
 .paso-btn.sacudir{animation:sacudir .4s;}
 @keyframes sacudir{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
 

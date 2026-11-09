@@ -3,11 +3,12 @@
    ============================================================ */
 
 // --- Estado ---
-let misionActual = null;   // "ovh" | "cesarea"
+let misionActual = null;   // "ovh" | "cesarea" | "gata" | "anatomia"
 let indiceRonda = 0;       // ronda actual
 let siguienteEsperado = 0; // qué posición toca acertar (0-indexed)
 let puntos = 0;
 let erroresRonda = 0;
+let rondaTerminada = false; // evita que se "pegue": bloquea clics tras completar
 
 // --- Referencias a pantallas ---
 const pantallas = {
@@ -55,6 +56,7 @@ function cargarRonda(){
   const ronda = mision.rondas[indiceRonda];
   siguienteEsperado = 0;
   erroresRonda = 0;
+  rondaTerminada = false;
 
   document.getElementById("nombre-ronda").textContent =
     "Ronda " + (indiceRonda+1) + " de " + mision.rondas.length;
@@ -63,6 +65,7 @@ function cargarRonda(){
   document.getElementById("lista-ordenada").innerHTML = "";
   document.getElementById("mensaje").className = "mensaje";
   document.getElementById("mensaje").innerHTML = "";
+  document.getElementById("zona-avance").innerHTML = "";
 
   actualizarProgreso();
 
@@ -82,12 +85,16 @@ function cargarRonda(){
 
 // ===== Intento de colocar un paso =====
 function intentarPaso(boton, paso){
+  // Si la ronda ya se completó, o el botón ya se usó, no hacer nada (evita quedarse pegado)
+  if(rondaTerminada || boton.disabled) return;
+
   const ronda = MISIONES[misionActual].rondas[indiceRonda];
   const msg = document.getElementById("mensaje");
 
   if(Number(boton.dataset.correcto) === siguienteEsperado){
     // ¡Acierto!
     boton.classList.add("usado");
+    boton.disabled = true;
     agregarALista(siguienteEsperado+1, paso.texto);
     siguienteEsperado++;
     puntos += 10;
@@ -121,6 +128,7 @@ function agregarALista(numero, texto){
 
 // ===== Ronda completada =====
 function rondaCompletada(){
+  rondaTerminada = true; // bloquea más clics en pasos
   const mision = MISIONES[misionActual];
   const msg = document.getElementById("mensaje");
   const esUltima = indiceRonda === mision.rondas.length - 1;
@@ -145,6 +153,10 @@ function rondaCompletada(){
     msg.appendChild(caja);
   }
 
+  // El botón de avanzar va en su PROPIA zona, nunca dentro de #mensaje,
+  // así jamás se borra y el juego no se queda pegado.
+  const zona = document.getElementById("zona-avance");
+  zona.innerHTML = "";
   const btn = document.createElement("button");
   btn.className = "btn-siguiente";
   btn.textContent = esUltima ? "🏁 Terminar cirugía" : "➡️ Siguiente ronda";
@@ -156,8 +168,7 @@ function rondaCompletada(){
       cargarRonda();
     }
   });
-  msg.appendChild(document.createElement("br"));
-  msg.appendChild(btn);
+  zona.appendChild(btn);
 
   actualizarProgreso(true);
 }
