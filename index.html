@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐾 Cirugía Quest — OVH y Cesárea paso a paso</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ===== PANTALLA INICIO ===== -->
+    <section id="pantalla-inicio" class="pantalla activa">
+      <div class="caja-inicio">
+        <h1>🐾 Cirugía Quest</h1>
+        <p class="subtitulo">Ovariohisterectomía &amp; Cesárea en perras — paso a paso, como un videojuego</p>
+
+        <div class="como-jugar">
+          <h2>¿Cómo se juega?</h2>
+          <ol>
+            <li>Elige una misión (OVH en perra o Cesárea).</li>
+            <li>En cada ronda aparecen los pasos <strong>desordenados</strong>.</li>
+            <li>Haz clic en ellos <strong>en el orden correcto</strong>.</li>
+            <li>Si aciertas, el paso se ilumina en verde y sumas puntos. Si fallas, te explico por qué y lo intentas otra vez.</li>
+            <li>Completa todas las rondas para terminar la cirugía y sacar la medalla. 🏅</li>
+          </ol>
+        </div>
+
+        <h2>Elige tu misión</h2>
+        <div class="misiones">
+          <button class="btn-mision" data-mision="ovh">
+            <span class="emoji">🐕</span>
+            <span class="titulo-mision">OVH en Perra</span>
+            <span class="desc-mision">Preparación → cirugía → cierre → complicaciones</span>
+          </button>
+          <button class="btn-mision" data-mision="gata">
+            <span class="emoji">🐈</span>
+            <span class="titulo-mision">OVH en Gata</span>
+            <span class="desc-mision">Abordaje lateral por el flanco izquierdo</span>
+          </button>
+          <button class="btn-mision" data-mision="cesarea">
+            <span class="emoji">🤰🐕</span>
+            <span class="titulo-mision">Cesárea en Perra</span>
+            <span class="desc-mision">Termina reanimando a los cachorros con Doxapram</span>
+          </button>
+          <button class="btn-mision" data-mision="anatomia">
+            <span class="emoji">🔬</span>
+            <span class="titulo-mision">Anatomía e Irrigación</span>
+            <span class="desc-mision">Repasa estructuras, ligamentos y arterias</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PANTALLA JUEGO ===== -->
+    <section id="pantalla-juego" class="pantalla">
+      <header class="barra-superior">
+        <button id="btn-volver" class="btn-pequeno">← Menú</button>
+        <div class="info-juego">
+          <span id="nombre-mision"></span>
+          <span class="separador">•</span>
+          <span id="nombre-ronda"></span>
+        </div>
+        <div class="puntos">⭐ <span id="marcador">0</span></div>
+      </header>
+
+      <div class="progreso-barra">
+        <div id="progreso-relleno"></div>
+      </div>
+
+      <main class="zona-juego">
+        <h2 id="titulo-ronda"></h2>
+        <p id="instruccion-ronda" class="instruccion"></p>
+
+        <div class="columnas">
+          <div class="col-izq">
+            <h3>Pasos disponibles (haz clic en el orden correcto)</h3>
+            <div id="banco-pasos" class="banco"></div>
+          </div>
+          <div class="col-der">
+            <h3>Orden que llevas</h3>
+            <ol id="lista-ordenada" class="lista-ordenada"></ol>
+          </div>
+        </div>
+
+        <div id="mensaje" class="mensaje"></div>
+      </main>
+    </section>
+
+    <!-- ===== PANTALLA FIN ===== -->
+    <section id="pantalla-fin" class="pantalla">
+      <div class="caja-inicio">
+        <h1 id="fin-titulo">🏅 ¡Cirugía completada!</h1>
+        <p id="fin-texto" class="subtitulo"></p>
+        <div id="fin-resumen" class="resumen"></div>
+        <div class="misiones">
+          <button id="btn-repetir" class="btn-mision"><span class="emoji">🔁</span><span class="titulo-mision">Repetir misión</span></button>
+          <button id="btn-menu-fin" class="btn-mision"><span class="emoji">🏠</span><span class="titulo-mision">Volver al menú</span></button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="data.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
